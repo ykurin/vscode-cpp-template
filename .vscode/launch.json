@@ -5,15 +5,39 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(Windows) Launch",
-            "type": "cppvsdbg",
+            "name": "(gdb) Launch",
+            "preLaunchTask": "build",
+            "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/main.exe",
             "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "stopAtEntry": true,
+            "cwd": "${workspaceRoot}",
             "environment": [],
-            "externalConsole": true
+            "externalConsole": true,
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "logging": {
+                "engineLogging": false,
+                "trace": false
+            },
+            "windows": {
+                "program": "${workspaceRoot}/build/main.exe",
+                "MIMode": "gdb",
+                "miDebuggerPath": "C:\\mingw-w64\\mingw64\\bin\\gdb.exe" // Path to gdb on windows
+            },
+            "linux": {
+                "program": "${workspaceRoot}/main.out",
+                "MIMode": "gdb"
+            },
+            "osx": {
+                "program": "${workspaceRoot}/main.out",
+                "MIMode": "lldb"
+            }
         }
     ]
 }
