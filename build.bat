@@ -1,22 +1,20 @@
 @echo off
 
+set PATH=%PATH%;%1
+
 set buildDir=.\build
 if not exist %buildDir% mkdir %buildDir%
 pushd %buildDir%
 
 :: compiler input
-set files=..\src\main.cpp
+set files=..\src\*.cpp
 
 :: compiler flags:
-:: /Zi enable debugging information
-:: /FC use full path in diagnostics
-set compileFlags=/Zi /FC
+set compileFlags=-lpthread --std=c++11 -O0
 
 :: linker flags:
-:: /SUBSYSTEM specifies exe env - defines entry point symbol
-set linkFlags=/link /SUBSYSTEM:CONSOLE
+set outputFile=-o %2
 
-call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-cl.exe %compilerflags% %files% %linkFlags%
+g++ -g %files% %compileFlags% %outputFile%
 
 popd
